@@ -1,8 +1,11 @@
 from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 
+SQLALCHEMY_DATABASE_URI = 'mysql://root:6868@localhost/self'
+
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:6868@localhost/self'
+app.config.from_object(__name__)
+app.config.from_envvar('MINITWIT_SETTINGS', silent=True)
 db = SQLAlchemy(app)
         
 @app.route('/testdb')
