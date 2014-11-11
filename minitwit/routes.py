@@ -18,5 +18,5 @@ def signup():
             return "[1] Create a new user [2] sign in the user [3] redirect to the user's profile"
             
             
-    elif request.method == 'GET':
+    elif request.method == 'GET'
         return render_template('signup.html', form=form)
