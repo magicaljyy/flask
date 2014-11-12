@@ -1,10 +1,15 @@
 from minitwit import app
 from flask import Flask, render_template, request, flash, session, redirect, url_for
-from forms import ContactForm, SignupForm, SigninForm
+from forms import SignupForm
 from models import db, User
+
+@app.route('/')
+def home():
+  return render_template('home.html')
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
+    print('jyy')
     form = SignupForm()
     
     if request.method=='POST':

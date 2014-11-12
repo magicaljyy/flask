@@ -1,4 +1,4 @@
-from flask.sqlalchemy import SQLAlchemy
+from flask.ext.sqlalchemy import SQLAlchemy
 from werkzeug import generate_password_hash, check_password_hash
 
 db = SQLAlchemy()
@@ -30,7 +30,7 @@ class User(db.Model):
 class Follower(db.Model):
     __tablename__ = 'follower'
     
-    who_id = db.Column(db.Integer)
+    who_id = db.Column(db.Integer, primary_key = True)
     whom_id = db.Column(db.Integer)
     
     def __init__(self, who_id, whom_id):
@@ -39,7 +39,7 @@ class Follower(db.Model):
 
     def __repr__(self):
         return '<User %d is following %d>'.format(self.who_id, self.whom_id)
-    
+ 
 class Message(db.Model):
     __tablename__ = 'message'
     

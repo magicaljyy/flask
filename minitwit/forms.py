@@ -1,4 +1,4 @@
-from flask.ext.wtf import Form, TextField, SubmitField, validators, ValidationError, PasswordField
+from wtforms import Form, TextField, SubmitField, validators, ValidationError, PasswordField
 from models import db, User
 
 class SignupForm(Form):
@@ -10,10 +10,13 @@ class SignupForm(Form):
     ])
     password = PasswordField('Password', [
         validators.Required('Please enter'),
-        validators.EqualsTo('confirm', message = 'Password must match')
+        validators.EqualTo('confirm', message = 'Password must match')
     ])
     confirm = PasswordField('Repeat Password')
     submit = SubmitField("Create account")
+    
+    def __init__(self, *args, **kwargs):
+        Form.__init__(self, *args, **kwargs)
     
     def validate(self):
         if not Form.validate(self):
