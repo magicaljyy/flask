@@ -1,4 +1,5 @@
-from wtforms import Form, TextField, SubmitField, validators, ValidationError, PasswordField
+from flask.ext.wtf import Form
+from wtforms import TextField, SubmitField, validators, ValidationError, PasswordField
 from models import db, User
 
 class SignupForm(Form):

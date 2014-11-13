@@ -12,7 +12,7 @@ class User(db.Model):
     email = db.Column(db.String(255))
     pw_hash = db.Column(db.String(255))
     
-    def __init__(self, firstname, lastname, email, password):
+    def __init__(self, first_name, last_name, email, password):
         self.first_name = first_name.title()
         self.last_name = last_name.title()
         self.email = email.lower()
