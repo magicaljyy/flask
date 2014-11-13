@@ -1,3 +1,3 @@
-from minitwit import app
+from mt import app
 
 app.run(debug=True)

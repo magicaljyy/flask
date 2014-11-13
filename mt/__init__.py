@@ -11,4 +11,4 @@ app.config.from_envvar('MINITWIT_SETTINGS', silent=True)
 from models import db
 db.init_app(app)
 
-import minitwit.routes
+import mt.routes

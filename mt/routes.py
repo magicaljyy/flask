@@ -1,4 +1,4 @@
-from minitwit import app
+from mt import app
 from flask import Flask, render_template, request, flash, session, redirect, url_for
 from forms import SignupForm
 from models import db, User
