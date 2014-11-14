@@ -44,8 +44,9 @@ class Message(db.Model):
     __tablename__ = 'message'
     
     message_id = db.Column(db.Integer, primary_key = True, autoincrement=True)
-    author_id = db.Column(db.Integer)
+    author_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
     text = db.Column(db.String(255))
+    pub_date = db.Column(db.DateTime)
     
     def __init__(self, author_id, text):
         self.author_id = author_id

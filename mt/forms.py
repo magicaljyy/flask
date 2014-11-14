@@ -10,7 +10,7 @@ class SignupForm(Form):
         validators.Email('Please enter your email address.')
     ])
     password = PasswordField('Password', [
-        validators.Required('Please enter'),
+        validators.Required('Please enter a password'),
         validators.EqualTo('confirm', message = 'Password must match')
     ])
     confirm = PasswordField('Repeat Password')
@@ -29,5 +29,23 @@ class SignupForm(Form):
           return False
         else:
           return True
+          
+class SigninForm(Form):
+    email = TextField('Email', [validators.Required('Please enter your email address')])
+    password = PasswordField('Password', [validators.Required('Please enter a password')])
     
+    submit = SubmitField('Sign In')
+    
+    def __init__(self, *args, **kwargs):
+        Form.__init__(self, *args, **kwargs)
+    
+    def validate(self):
+        if not Form.validate(self):
+            return False
+        user = User.query.filter_by(email = self.email.data.lower()).first()
+        if user and user.check_password(self.password):
+            return True
+        else:
+            self.email.errors.append('Invalid login details')
+            return False
     

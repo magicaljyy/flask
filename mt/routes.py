@@ -1,6 +1,6 @@
 from mt import app
-from flask import Flask, render_template, request, flash, session, redirect, url_for
-from forms import SignupForm
+from flask import Flask, render_template, request, flash, session, redirect, url_for, abort
+from forms import SignupForm, SigninForm
 from models import db, User, Message
 
 @app.route('/')
@@ -11,7 +11,7 @@ def home():
 def signup():
     form = SignupForm()
     
-    if request.method=='POST':
+    if request.method == 'POST':
         if form.validate() == False:
             return render_template('signup.html', form = form)
         else:
@@ -25,21 +25,31 @@ def signup():
     elif request.method == 'GET':
         return render_template('signup.html', form = form)
 
-@app.route('/signin')
+@app.route('/signin', methods=['GET', 'POST'])
 def signin():
-    print('jyy')
-    about(404)
+    form = SigninForm()
+    
+    if request.method == 'POST':
+        if form.validate() == False:
+            return render_template('signup.html', form = form)
+        else:
+            session['email'] = new_user.email
+            return redirect(url_for('%s'.format(new_user.user_id)))
+    
+    elif request.method == 'GET':
+        return render_template('signin.html', form=form)
 
 @app.route('/<uid>')
 def user_timeline(uid):
     if 'email' not in session:
         return redirect(url_for('signin'))
     user = User.query.filter_by(user_id = uid).first()
+    
     if user is None:
         return redirect(url_for('signin'))
     else:
         return render_template('timeline.html',
-            messages = Message.query.join(User, User.user_id == Message.author_id, User.user_id == uid).all(),
+            messages = db.session.query(Message, User).filter(Message.author_id == User.user_id).filter(Message.author_id == uid).all(),
             profile_user = user
         )       
 
