@@ -1,5 +1,6 @@
 from flask.ext.sqlalchemy import SQLAlchemy
 from werkzeug import generate_password_hash, check_password_hash
+import datetime
 
 db = SQLAlchemy()
 
@@ -46,7 +47,7 @@ class Message(db.Model):
     message_id = db.Column(db.Integer, primary_key = True, autoincrement=True)
     author_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
     text = db.Column(db.String(255))
-    pub_date = db.Column(db.DateTime)
+    pub_date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
     
     def __init__(self, author_id, text):
         self.author_id = author_id

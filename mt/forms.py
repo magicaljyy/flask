@@ -43,9 +43,16 @@ class SigninForm(Form):
         if not Form.validate(self):
             return False
         user = User.query.filter_by(email = self.email.data.lower()).first()
-        if user and user.check_password(self.password):
+        if user and user.check_password(self.password.data):
             return True
         else:
             self.email.errors.append('Invalid login details')
             return False
+
+class TweetForm(Form):
+    text = TextField('Tweet', [validators.Required('Pleas enter your Tweet')])
+    submit = SubmitField('Submit')
     
+    def __init__(self, *args, **kwargs):
+        Form.__init__(self, *args, **kwargs)
+        
