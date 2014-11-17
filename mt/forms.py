@@ -50,8 +50,8 @@ class SigninForm(Form):
             return False
 
 class TweetForm(Form):
-    text = TextField('Tweet', [validators.Required('Pleas enter your Tweet')])
-    submit = SubmitField('Submit')
+    text = TextField('Tweet', [validators.Required()])
+    submit = SubmitField('Share')
     
     def __init__(self, *args, **kwargs):
         Form.__init__(self, *args, **kwargs)
